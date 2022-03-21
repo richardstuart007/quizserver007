@@ -2,13 +2,11 @@
   "name": "quizserver",
   "homepage": "https://richardstuart007.github.io/quizserver007",
   "version": "1.0.0",
-  "description": "Quiz Server V1",
+  "description": "Quiz Server",
   "main": "script.js",
   "scripts": {
     "start": "node quizServer.js",
-    "devstart": "nodemon quizServer.js",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "devstart": "nodemon quizServer.js"
   },
   "author": "Richard",
   "license": "ISC",
