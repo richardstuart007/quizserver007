@@ -1,8 +1,8 @@
-const f_ExistKey = require('./f_ExistKey')
+const f_ExistKey = require('./s_ExistKey_handler')
 //
 //  Global Variable - Define return object
 //
-const CatchFunction = 'ExistKey'
+const CatchFunction = 's_ExistKey'
 var returnObject = {
   returnValue: '',
   returnMessage: '',
@@ -39,13 +39,13 @@ async function handleExistKey(req, res, db) {
     //..................................................................................
     // Process Request Promises(ALL)
     //..................................................................................
-    returnData = await Promise.all([
+    const returnData = await Promise.all([
       f_ExistKey.f_handleExistKey(db, table, keyName, keyValue)
     ])
     //
     // Parse Results
     //
-    returnDataObject = returnData[0]
+    const returnDataObject = returnData[0]
     returnObject = Object.assign({}, returnObject, returnDataObject)
     //
     //  Return values

@@ -1,4 +1,4 @@
-const f_AllKey = require('./f_AllKey')
+const s_Key1_handler = require('./s_Key1_handler')
 //
 //  Global Variable - Define return object
 //
@@ -16,7 +16,7 @@ var returnObject = {
 //==================================================================================
 // Update a row into a table : table, keyName, keyValue are passed in Body
 //==================================================================================
-async function handleAllKey(req, res, db) {
+async function handleKey1(req, res, db) {
   try {
     //
     // Initialise Global Variables
@@ -66,7 +66,14 @@ async function handleAllKey(req, res, db) {
     // Process Request Promises(ALL)
     //..................................................................................
     const returnData = await Promise.all([
-      f_AllKey.f_handleAllKey(db, action, table, keyName, keyValue, dataValues)
+      s_Key1_handler.f_handleKey1(
+        db,
+        action,
+        table,
+        keyName,
+        keyValue,
+        dataValues
+      )
     ])
     //
     // Parse Results
@@ -97,5 +104,5 @@ async function handleAllKey(req, res, db) {
 // Exports
 //==================================================================================
 module.exports = {
-  handleAllKey
+  handleKey1
 }
