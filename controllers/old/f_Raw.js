@@ -5,19 +5,19 @@
 // Constants
 //
 const log = false
-const reference = "f_Raw"
+const reference = 'f_Raw'
 //
 //  Global Variable - Define return object
 //
-const CatchFunction = "f_Raw"
-const SqlFunction = "f_Raw"
+const CatchFunction = 'f_Raw'
+const SqlFunction = 'f_Raw'
 var returnObject = {
-  returnValue: "",
-  returnMessage: "",
-  returnSqlFunction: "",
-  returnCatchFunction: "",
+  returnValue: '',
+  returnMessage: '',
+  returnSqlFunction: '',
+  returnCatchFunction: '',
   returnCatch: false,
-  returnCatchMsg: "",
+  returnCatchMsg: '',
   returnRows: []
 }
 //==================================================================================
@@ -29,11 +29,11 @@ async function f_handleRaw(db, bodyParms) {
     // Initialise Global Variables
     //
     returnObject.returnValue = false
-    returnObject.returnMessage = ""
+    returnObject.returnMessage = ''
     returnObject.returnSqlFunction = SqlFunction
-    returnObject.returnCatchFunction = ""
-    returnObject.returnCatch = ""
-    returnObject.returnCatchMsg = ""
+    returnObject.returnCatchFunction = ''
+    returnObject.returnCatch = ''
+    returnObject.returnCatchMsg = ''
     returnObject.returnRows = []
     //..................................................................................
     //. Parameter Validation
@@ -57,13 +57,13 @@ async function f_handleRaw(db, bodyParms) {
     //  Validate sqlAction type
     //
     if (
-      sqlAction !== "DELETE" &&
-      sqlAction !== "EXIST" &&
-      sqlAction !== "SELECTSQL" &&
-      sqlAction !== "SELECT" &&
-      sqlAction !== "INSERT" &&
-      sqlAction !== "UPDATE" &&
-      sqlAction !== "UPSERT"
+      sqlAction !== 'DELETE' &&
+      sqlAction !== 'EXIST' &&
+      sqlAction !== 'SELECTSQL' &&
+      sqlAction !== 'SELECT' &&
+      sqlAction !== 'INSERT' &&
+      sqlAction !== 'UPDATE' &&
+      sqlAction !== 'UPSERT'
     ) {
       returnObject.returnValue = false
       returnObject.returnMessage = `SqlAction ${sqlAction}: SqlAction not valid`
@@ -72,7 +72,7 @@ async function f_handleRaw(db, bodyParms) {
     //
     //  SELECTSQL needs sqlString
     //
-    if (sqlAction === "SELECTSQL" && !sqlString) {
+    if (sqlAction === 'SELECTSQL' && !sqlString) {
       returnObject.returnValue = false
       returnObject.returnMessage = `SqlAction ${sqlAction}: sqlString not passed`
       return returnObject
@@ -80,7 +80,7 @@ async function f_handleRaw(db, bodyParms) {
     //
     //  not SELECTSQL needs table
     //
-    if (sqlAction !== "SELECTSQL" && !sqlTable) {
+    if (sqlAction !== 'SELECTSQL' && !sqlTable) {
       returnObject.returnValue = false
       returnObject.returnMessage = `SqlAction ${sqlAction}: sqlTable not passed`
       return returnObject
@@ -145,39 +145,39 @@ async function f_handleRawAwait(
   //
   try {
     switch (sqlAction) {
-      case "SELECTSQL":
+      case 'SELECTSQL':
         ResultSql = await db.select(db.raw(sqlString))
         break
-      case "SELECT":
-        ResultSql = await db.select("*").from(sqlTable).whereRaw(sqlWhere)
+      case 'SELECT':
+        ResultSql = await db.select('*').from(sqlTable).whereRaw(sqlWhere)
         break
-      case "UPDATE":
+      case 'UPDATE':
         ResultSql = await db
           .update(sqlRow)
           .from(sqlTable)
           .whereRaw(sqlWhere)
-          .returning(["*"])
+          .returning(['*'])
         break
-      case "DELETE":
+      case 'DELETE':
         ResultSql = await db
           .del()
           .from(sqlTable)
           .whereRaw(sqlWhere)
-          .returning(["*"])
+          .returning(['*'])
         break
-      case "INSERT":
+      case 'INSERT':
         ResultSql = await db
           .insert(sqlRow)
           .into(sqlTable)
-          .returning(["*"])
+          .returning(['*'])
           .onConflict(sqlKeyName)
           .ignore()
         break
-      case "UPSERT":
+      case 'UPSERT':
         ResultSql = await db
           .insert(sqlRow)
           .into(sqlTable)
-          .returning(["*"])
+          .returning(['*'])
           .onConflict(sqlKeyName)
           .merge()
         break

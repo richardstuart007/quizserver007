@@ -1,23 +1,23 @@
 //==================================================================================
 //= Process a RAW fetch request from server route
 //==================================================================================
-const f_Raw = require("./f_Raw")
+const f_Raw = require('./f_Raw')
 //
 // Constants
 //
 const log = false
-const reference = "Raw"
+const reference = 'Raw'
 //
 //  Global Variable - Define return object
 //
-const CatchFunction = "Raw"
+const CatchFunction = 'Raw'
 var returnObject = {
-  returnValue: "",
-  returnMessage: "",
-  returnSqlFunction: "",
-  returnCatchFunction: "",
+  returnValue: '',
+  returnMessage: '',
+  returnSqlFunction: '',
+  returnCatchFunction: '',
   returnCatch: false,
-  returnCatchMsg: "",
+  returnCatchMsg: '',
   returnRows: []
 }
 //==================================================================================
@@ -29,11 +29,11 @@ async function handleRaw(req, res, db) {
     // Initialise Global Variables
     //
     returnObject.returnValue = false
-    returnObject.returnMessage = ""
-    returnObject.returnSqlFunction = ""
-    returnObject.returnCatchFunction = ""
-    returnObject.returnCatch = ""
-    returnObject.returnCatchMsg = ""
+    returnObject.returnMessage = ''
+    returnObject.returnSqlFunction = ''
+    returnObject.returnCatchFunction = ''
+    returnObject.returnCatch = ''
+    returnObject.returnCatchMsg = ''
     returnObject.returnRows = []
     //..................................................................................
     //. Check values sent in Body
@@ -52,13 +52,13 @@ async function handleRaw(req, res, db) {
     //  Validate sqlAction type
     //
     if (
-      sqlAction !== "DELETE" &&
-      sqlAction !== "EXIST" &&
-      sqlAction !== "SELECTSQL" &&
-      sqlAction !== "SELECT" &&
-      sqlAction !== "INSERT" &&
-      sqlAction !== "UPDATE" &&
-      sqlAction !== "UPSERT"
+      sqlAction !== 'DELETE' &&
+      sqlAction !== 'EXIST' &&
+      sqlAction !== 'SELECTSQL' &&
+      sqlAction !== 'SELECT' &&
+      sqlAction !== 'INSERT' &&
+      sqlAction !== 'UPDATE' &&
+      sqlAction !== 'UPSERT'
     ) {
       returnObject.returnMessage = `sqlAction ${sqlAction}: sqlAction not valid`
       return res.status(400).json(returnObject)

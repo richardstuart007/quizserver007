@@ -9,10 +9,10 @@ const { format } = require('date-fns')
 //
 //  Sub components
 //
-const Raw = require('./controllers/Raw')
-const register = require('./controllers/register')
-const signin = require('./controllers/signin')
-const profile = require('./controllers/profile')
+const s_Raw = require('./controllers/s_Raw')
+const s_register = require('./controllers/s_register')
+const s_signin = require('./controllers/s_signin')
+const s_profile = require('./controllers/s_profile')
 //..............................................................................
 //.  Initialisation
 //.............................................................................
@@ -32,6 +32,7 @@ const {
   KNEX_DATABASE,
   URL_SIGNIN,
   URL_QUESTIONS,
+  URL_QUESTIONS_RAW,
   URL_REGISTER,
   URL_PROFILE
 } = require('./quizServerConstants.js')
@@ -54,43 +55,65 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 //.............................................................................
-//.  Routes - Questions
+//.  Routes - Questions (RAW)
+//.............................................................................
+app.get(URL_QUESTIONS_RAW, (req, res) => {
+  logRawQuestions(req, 'GET', 'RAW')
+  s_Raw.handleRaw(req, res, db)
+})
+
+app.get(URL_QUESTIONS_RAW, (req, res) => {
+  logRawQuestions(req, 'POST', 'RAW')
+  s_Raw.handleRaw(req, res, db)
+})
+
+app.get(URL_QUESTIONS_RAW, (req, res) => {
+  logRawQuestions(req, 'DELETE', 'RAW')
+  s_Raw.handleRaw(req, res, db)
+})
+
+app.get(URL_QUESTIONS_RAW, (req, res) => {
+  logRawQuestions(req, 'PUT', 'RAW')
+  s_Raw.handleRaw(req, res, db)
+})
+//.............................................................................
+//.  Routes - Questions (not RAW)
 //.............................................................................
 app.get(URL_QUESTIONS, (req, res) => {
-  logRawQuestions(req, 'GET', 'RAW')
-  Raw.handleRaw(req, res, db)
+  logRawQuestions(req, 'GET', 'CONTROLLED')
+  s_Raw.handleRaw(req, res, db)
 })
 
 app.post(URL_QUESTIONS, (req, res) => {
-  logRawQuestions(req, 'POST', 'RAW')
-  Raw.handleRaw(req, res, db)
+  logRawQuestions(req, 'POST', 'CONTROLLED')
+  s_Raw.handleRaw(req, res, db)
 })
 
 app.delete(URL_QUESTIONS, (req, res) => {
-  logRawQuestions(req, 'DELETE', 'RAW')
-  Raw.handleRaw(req, res, db)
+  logRawQuestions(req, 'DELETE', 'CONTROLLED')
+  s_Raw.handleRaw(req, res, db)
 })
 
 app.put(URL_QUESTIONS, (req, res) => {
-  logRawQuestions(req, 'PUT', 'RAW')
-  Raw.handleRaw(req, res, db)
+  logRawQuestions(req, 'PUT', 'CONTROLLED')
+  s_Raw.handleRaw(req, res, db)
 })
 //.............................................................................
 //.  Routes - Register/SignIn
 //.............................................................................
 app.get(`${URL_PROFILE}/:id`, (req, res) => {
   logRawSignIn(req, 'GET Profile')
-  profile.handleProfileGet(req, res, db)
+  s_profile.handleProfileGet(req, res, db)
 })
 
 app.post(URL_SIGNIN, (req, res) => {
   logRawSignIn(req, 'POST Signin')
-  signin.handleSignin(req, res, db, bcrypt)
+  s_signin.handleSignin(req, res, db, bcrypt)
 })
 
 app.post(URL_REGISTER, (req, res) => {
   logRawSignIn(req, 'POST Register')
-  register.handleRegister(req, res, db, bcrypt)
+  s_register.handleRegister(req, res, db, bcrypt)
 })
 //..............................................................................
 //.  Start Server
